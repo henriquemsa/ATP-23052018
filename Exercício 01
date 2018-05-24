@@ -1,0 +1,77 @@
+/*
+ * Faça um programa contendo os serviços que uma oficina mecânica pode realizar: 
+ * ordem de serviço (número da OS, valor da OS, serviço realizado e nome do cliente). 
+ * Leia as informações de 30 ordens de serviço e determine, ao final, a média dos 
+ * valores dos serviços da oficina, o nome do cliente que realizou o serviço mais caro, 
+ * juntamente com a descrição desse serviço. 
+ */
+
+using System;
+
+namespace Exercicio1
+{
+    class Program
+    {
+        // Estrutura para gerenciar valores, serviços e clientes de uma oficina
+        struct OrdemServico
+        {
+            public int numero;
+            public double valor;
+            public string servico;
+            public string cliente;
+        }
+
+        static void Main(string[] args)
+        {
+            // Declaração de variáveis
+            OrdemServico[] Ordem = new OrdemServico[3];
+            double maiorValor, mediaValor = 0;
+            int posicao = 0;
+
+
+            // Recebendo dados do usuário
+            for (int i = 0; i < Ordem.Length; i++)
+            {
+                Console.Clear();
+                Console.WriteLine();
+                Console.Write(" Número da OS: ");
+                Ordem[i].numero = int.Parse(Console.ReadLine());
+                Console.Write(" Valor do serviço: ");
+                Ordem[i].valor = double.Parse(Console.ReadLine());
+                Console.Write(" Descrição do serviço: ");
+                Ordem[i].servico = Console.ReadLine();
+                Console.Write(" Nome do cliente: ");
+                Ordem[i].cliente = Console.ReadLine();
+            }
+
+            // Inicializando variável 'maiorValor' com o valor da primeira posição de 'Ordem'
+            maiorValor = Ordem[0].valor;
+
+            // Percorre o array acumulando os valores de 'Ordem.valor' na variável 'mediaValor' e compara o maior valor cobrado
+            for (int i = 0; i < Ordem.Length; i++)
+            {
+                mediaValor += Ordem[i].valor;
+
+                if (Ordem[i].valor > maiorValor)
+                {
+                    maiorValor = Ordem[i].valor;
+                    posicao = i; // Salva a posição no array do serviço de maior valor
+                }
+            }
+
+            // Calcula a média
+            mediaValor = mediaValor / Ordem.Length;
+
+            // Imprimindo resultados
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(" A média dos valores cobrados nas últimas 30 ordens de serviço é R$ " + mediaValor);
+            Console.WriteLine(" O maior valor cobrado pela oficina nas últimas 30 ordens de serviço é R$ " + maiorValor);
+            Console.WriteLine(" O nome do cliente que realizou o serviço mais caro é: " + Ordem[posicao].cliente);
+            Console.WriteLine(" A descrição do serviço mais caro é: " + Ordem[posicao].servico);
+            Console.WriteLine();
+            Console.WriteLine(" Pressione qualquer tecla para sair...");
+            Console.ReadKey();
+        }
+    }
+}
