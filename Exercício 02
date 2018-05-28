@@ -1,0 +1,81 @@
+/*
+ * A prefeitura de uma cidade fez uma pesquisa entre os seus habitantes, coletando dados sobre o salário, idade e número de filhos. 
+ * Faça um programa que leia esses dados de 20 pessoas, calcule e mostre:
+ *	(a) a média de salário da população;
+ *	(b) a média do número de filhos;
+ *	(c) o maior salário;
+ *	(d) o percentual de mulheres com salário superior a R$ 1.000,00.
+ */
+
+using System;
+
+namespace Exercicio2
+{
+    class Program
+    {
+        // Estrutura para gerenciar dados de habitantes de uma cidade
+        struct Habitantes
+        {
+            public double salario;
+            public int idade;
+            public int filhos;
+        }
+
+        static void Main(string[] args)
+        {
+            // Declaração de variáveis
+            Habitantes[] hab = new Habitantes[2];
+            double mediaSalario = 0.0, mediaFilhos = 0.0, maiorSalario = 0.0, percMulheres = 0.0;
+            // Laço para receber dados de 20 habitantes
+            for (int i = 0; i < hab.Length; i++)
+            {
+                Console.Clear();
+                Console.WriteLine();
+
+                Console.Write(" Entre com o salário do {0}º habitante: ", (i + 1));
+                hab[i].salario = double.Parse(Console.ReadLine());
+                Console.Write(" Entre com a idade do {0}º habitante: ", (i + 1));
+                hab[i].idade = int.Parse(Console.ReadLine());
+                Console.Write(" Entre com o número de filhos do {0}º habitante: ", (i + 1));
+                hab[i].filhos = int.Parse(Console.ReadLine());
+
+                // Lê o sexo e adiciona 1 no acumulador 'percMulheres' caso seja feminino e tenha salario maior que 1000
+                Console.Write(" Entre com o sexo do {0}º habitante (F/M): ", (i + 1)); 
+                if (Console.ReadLine() == "F")
+                {
+                    if (hab[i].salario > 1000.0)
+                    {
+                        percMulheres++;
+                    }
+                }                                                             
+            }
+
+            // Percorrendo o vetor 'hab' e acumulando valores
+            for (int j = 0; j < hab.Length; j++)
+            {
+                mediaSalario += hab[j].salario; // Acumulando os valores 'salario' em 'mediaSalario' 
+                mediaFilhos += hab[j].filhos; // Acumulando os valores 'filhos' em 'mediaFilhos' 
+                if (hab[j].salario > maiorSalario) // Testa se o valor da atual posição de 'salario' é maior que 'maiorSalario'
+                {
+                    maiorSalario = hab[j].salario; // Caso positivo, atribui novo valor a 'maiorSalario'
+                }
+            }
+
+            // Calculando médias
+            mediaSalario = mediaSalario / hab.Length;
+            mediaFilhos = mediaFilhos / hab.Length;
+            percMulheres = (percMulheres * 100) / hab.Length;
+
+            // Imprimindo resultados
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(" A média de salário da população é: " + mediaSalario);
+            Console.WriteLine(" A média de filhos da população é: " + mediaFilhos);
+            Console.WriteLine(" O maior salário da população é: " + maiorSalario);
+            Console.WriteLine(" A porcentagem de mulheres com salário maior que R$ 1000,00 é: {0}%", percMulheres);
+            Console.WriteLine();
+            Console.WriteLine(" Pressione qualquer tecla para sair...");
+            Console.ReadKey();
+        }
+    }
+}
